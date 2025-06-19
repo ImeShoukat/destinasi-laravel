@@ -1,7 +1,7 @@
-<div class="max-w-xl mx-auto px-4 py-6">
+<div class="max-w-3xl mx-auto px-4 py-6">
     <h1 class="text-2xl font-bold text-zinc-800 dark:text-white mb-6">Edit Ulasan</h1>
 
-    <form wire:submit.prevent="update" class="space-y-4">
+    <form wire:submit.prevent="update" class="space-y-4 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow">
         <div>
             <label class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Ulasan</label>
             <textarea wire:model.defer="ulasan" class="w-full px-4 py-2 border rounded-lg dark:bg-zinc-900 dark:border-zinc-700 dark:text-white"></textarea>

@@ -1,4 +1,5 @@
 <?php
+use App\Livewire\Pages\DashboardAdmin;
 
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -29,9 +30,15 @@ use App\Livewire\Ulasan\UlasanIndex;
 use App\Livewire\Ulasan\UlasanCreate;
 use App\Livewire\Ulasan\UlasanEdit;
 
-Route::get('/', function () {
-    return redirect()->route('wisata.index');
-});
+// Route::get('/', function () {
+//     if (Auth::check()) {
+//         return Auth::user()->role === 'admin'
+//             ? redirect()->route('dashboard.admin')
+//             : redirect()->route('home');
+//     }
+
+//     return redirect()->route('home');
+// });
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -61,9 +68,9 @@ Route::get('/user/create', UserCreate::class)->name('user.create');
 Route::get('/user/{userId}/edit', UserEdit::class)->name('user.edit');
 
 Route::get('/ulasan', UlasanIndex::class)->name('ulasan.index');
-
 Route::get('/ulasan/create', UlasanCreate::class)->name('ulasan.create');
-
 Route::get('/ulasan/{ulasanId}/edit', UlasanEdit::class)->name('ulasan.edit');
+
+Route::get('/dashboard/admin', DashboardAdmin::class)->name('dashboard.admin');
 
 require __DIR__.'/auth.php';

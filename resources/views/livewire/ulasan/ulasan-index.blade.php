@@ -1,4 +1,4 @@
-<div class="max-w-4xl mx-auto px-4 py-6">
+<div class="max-w-6xl mx-auto px-4 py-6">
     <div class="mb-6 flex justify-between items-center">
         <h1 class="text-3xl font-semibold text-zinc-800 dark:text-zinc-100">Manajemen Ulasan</h1>
         <a href="{{ route('ulasan.create') }}" wire:navigate
