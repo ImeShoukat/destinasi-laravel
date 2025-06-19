@@ -30,6 +30,13 @@ use App\Livewire\Ulasan\UlasanIndex;
 use App\Livewire\Ulasan\UlasanCreate;
 use App\Livewire\Ulasan\UlasanEdit;
 
+use App\Livewire\Pages\Home;
+use App\Livewire\Pages\DetailWisata;
+
+
+Route::get('/', Home::class)->name('home');
+Route::get('/wisata/{wisataId}', DetailWisata::class)->name('wisata.detail');
+
 // Route::get('/', function () {
 //     if (Auth::check()) {
 //         return Auth::user()->role === 'admin'
