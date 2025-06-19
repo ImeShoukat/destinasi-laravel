@@ -29,7 +29,11 @@
             </select>
             @error('kota_id') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
-
+        <div>
+            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Biaya Masuk</label>
+            <input type="number" wire:model.defer="biaya_masuk" class="w-full px-4 py-2 border rounded-lg dark:bg-zinc-900 dark:border-zinc-700 dark:text-white focus:outline-none">
+            @error('biaya_masuk') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+        </div>
         <div>
             <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Deskripsi</label>
             <textarea wire:model.defer="deskripsi" rows="4" class="w-full px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white focus:outline-none"></textarea>

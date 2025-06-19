@@ -9,7 +9,7 @@ use App\Models\Kota;
 
 class WisataCreate extends Component
 {
-    public $nama_wisata, $kategori_id, $kota_id, $deskripsi;
+    public $nama_wisata, $kategori_id, $kota_id, $deskripsi, $biaya_masuk;
     public $kategoris, $kotas;
     public function mount()
     {
@@ -22,6 +22,7 @@ class WisataCreate extends Component
             'nama_wisata' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategoris,id',
             'kota_id' => 'required|exists:kotas,id',
+            'biaya_masuk' => 'required|numeric|min:0',
             'deskripsi' => 'required|string',
         ]);
 
@@ -29,6 +30,7 @@ class WisataCreate extends Component
             'nama_wisata' => $this->nama_wisata,
             'kategori_id' => $this->kategori_id,
             'kota_id' => $this->kota_id,
+            'biaya_masuk' => $this->biaya_masuk,
             'deskripsi' => $this->deskripsi,
         ]);
 

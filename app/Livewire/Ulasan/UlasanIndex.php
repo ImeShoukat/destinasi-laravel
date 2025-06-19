@@ -7,20 +7,16 @@ use App\Models\Ulasan;
 
 class UlasanIndex extends Component
 {
-    public $wisataId;
     public $ulasans;
 
-    public function mount($wisataId)
+    public function mount()
     {
-        $this->wisataId = $wisataId;
         $this->fetchUlasans();
     }
 
     public function fetchUlasans()
     {
-        $this->ulasans = Ulasan::with(['user', 'wisata'])
-            ->where('wisata_id', $this->wisataId)
-            ->get();
+        $this->ulasans = Ulasan::with(['user', 'wisata'])->get();
     }
 
     public function delete($ulasanId)
@@ -34,16 +30,18 @@ class UlasanIndex extends Component
 
     public function edit($ulasanId)
     {
-        return redirect()->route('ulasan.edit', ['ulasanId' => $ulasanId]);
+        $this->redirect(route('ulasan.edit', ['ulasanId' => $ulasanId]), navigate: true);
     }
 
     public function create()
     {
-        return redirect()->route('ulasan.create', ['wisataId' => $this->wisataId]);
+        $this->redirect(route('ulasan.index'), navigate: true);
     }
 
     public function render()
     {
-        return view('livewire.ulasan.ulasan-index');
+        return view('livewire.ulasan.ulasan-index', [
+            'ulasans' => $this->ulasans
+        ]);
     }
 }

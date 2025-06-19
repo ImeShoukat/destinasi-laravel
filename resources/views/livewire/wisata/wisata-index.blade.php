@@ -25,6 +25,7 @@
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Nama Wisata</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Kategori</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Kota</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Harga Tiket</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Deskripsi</th>
                     <th class="px-6 py-3 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">Aksi</th>
                 </tr>
@@ -36,6 +37,7 @@
                         <td class="px-6 py-4 text-sm font-medium text-zinc-900 dark:text-white">{{ $wisata->nama_wisata }}</td>
                         <td class="px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">{{ $wisata->kategori->nama_kategori ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">{{ $wisata->kota->nama_kota ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">Rp {{ number_format($wisata->biaya_masuk, 0, ',', '.') }}</td>
                         <td class="px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
                             {{ \Illuminate\Support\Str::limit($wisata->deskripsi, 100) }}
                         </td>
@@ -44,10 +46,9 @@
                                class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
                             </a>
-                            <button
-                                wire:click="$dispatch('confirm-delete', { id: {{ $wisata->id }} })"
-                                class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
-                                Hapus
+                            <button onclick="if(confirm('Apakah Anda yakin ingin menghapus wisata ini?')) { @this.delete({{ $wisata->id }}) }"
+                            class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
+                            Hapus
                             </button>
                         </td>
                     </tr>

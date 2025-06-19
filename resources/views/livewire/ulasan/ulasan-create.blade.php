@@ -45,8 +45,14 @@
         </div>
 
         <div class="flex items-center justify-between">
-            <a href="{{ route('ulasan.index', ['wisataId' => $wisataId]) }}" class="text-sm text-zinc-600 hover:text-zinc-800 dark:text-zinc-300 dark:hover:text-white transition">← Kembali</a>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">Simpan</button>
+            <a href="{{ route('ulasan.index') }}" wire:navigate
+               class="text-sm text-zinc-600 hover:text-zinc-800 dark:text-zinc-300 dark:hover:text-white transition">
+                ← Kembali
+            </a>
+            <button type="submit" wire:target="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">
+                Simpan
+            </button>
         </div>
     </form>
 </div>

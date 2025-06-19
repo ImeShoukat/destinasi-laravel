@@ -13,11 +13,6 @@ class UlasanCreate extends Component
     public $rating;
     public $ulasan; 
 
-    public function mount($wisataId)
-    {
-        $this->wisataId = $wisataId;
-    }
-
     protected function rules()
     {
         return [
@@ -36,12 +31,12 @@ class UlasanCreate extends Component
             'wisata_id' => $this->wisataId,
             'user_id' => $this->userId,
             'rating' => $this->rating,
-            'komentar' => $this->ulasan,
+            'ulasan' => $this->ulasan,
         ]);
 
         session()->flash('message', 'Ulasan berhasil ditambahkan.');
 
-        return redirect()->route('ulasan.index', ['wisataId' => $this->wisataId]);
+        $this->redirect(route('ulasan.index', ['wisataId' => $this->wisataId]), navigate: true);
     }
 
     public function resetFields()

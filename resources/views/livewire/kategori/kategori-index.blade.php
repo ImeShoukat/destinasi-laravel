@@ -10,7 +10,11 @@
             Tambah Kategori
         </a>
     </div>
-
+    @if(session()->has('message'))
+        <div class="mb-4 px-4 py-3 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded-lg shadow">
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="bg-white dark:bg-zinc-800 shadow-md rounded-xl overflow-x-auto">
         <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
             <thead class="bg-zinc-100 dark:bg-zinc-700">
@@ -30,11 +34,11 @@
                                class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
                             </a>
-                            <button wire:click="delete({{ $kategori->id }})"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')"
-                                    class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
-                                Hapus
-                            </button>
+                            <button onclick="if(confirm('Apakah Anda yakin ingin menghapus kategori ini?')) { @this.delete({{ $kategori->id }}) }"
+                            class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
+                            Hapus
+                        </button>
+
                         </td>
                     </tr>
                 @empty

@@ -23,7 +23,9 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">No</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Nama Pengulas</th>
-                    <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Komentar</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Wisata</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Ulasan</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Rating</th>
                     <th class="px-6 py-3 text-center text-sm font-medium text-zinc-600 dark:text-zinc-300">Aksi</th>
                 </tr>
             </thead>
@@ -31,22 +33,27 @@
                 @forelse($ulasans as $index => $ulasan)
                     <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700">
                         <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $index + 1 }}</td>
-                        <td class="px-6 py-4 text-sm font-medium text-zinc-900 dark:text-white">{{ $ulasan->user->name ?? 'Anonim' }}</td>
-                        <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->komentar }}</td>
+                        <td class="px-6 py-4 text-sm font-medium text-zinc-900 dark:text-white">{{ $ulasan->user->name}}</td>
+                        <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->wisata->nama_wisata ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->ulasan }}</td>
+                        <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->rating }}/10</td>
                         <td class="px-6 py-4 text-center space-x-2">
-                            <a href="{{ route('ulasan.edit', ['ulasanId' => $ulasan->id]) }}">
+                            <a href="{{ route('ulasan.edit', ['ulasanId' => $ulasan->id]) }}"
+                               class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
                             </a>
                             <button wire:click="delete({{ $ulasan->id }})"
-                                onclick="return confirm('Yakin ingin menghapus ulasan ini?')"
-                                class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
+                                    onclick="return confirm('Yakin ingin menghapus ulasan ini?')"
+                                    class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Hapus
                             </button>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-4 text-center text-zinc-500 dark:text-zinc-400 text-sm">Belum ada ulasan.</td>
+                        <td colspan="6" class="px-6 py-4 text-center text-zinc-500 dark:text-zinc-400 text-sm">
+                            Belum ada ulasan.
+                        </td>
                     </tr>
                 @endforelse
             </tbody>
