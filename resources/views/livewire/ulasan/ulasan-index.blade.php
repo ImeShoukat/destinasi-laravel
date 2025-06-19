@@ -38,14 +38,13 @@
                         <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->ulasan }}</td>
                         <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->rating }}/10</td>
                         <td class="px-6 py-4 text-center space-x-2">
-                            <a href="{{ route('ulasan.edit', ['ulasanId' => $ulasan->id]) }}"
-                               class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
+                            <a href="{{ route('ulasan.edit', $ulasan->id) }}" wire:navigate
+                            class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
                             </a>
-                            <button wire:click="delete({{ $ulasan->id }})"
-                                    onclick="return confirm('Yakin ingin menghapus ulasan ini?')"
-                                    class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
-                                Hapus
+                            <button onclick="if(confirm('Apakah Anda yakin ingin menghapus Ulasan ini?')) { @this.delete({{ $ulasan->id }}) }"
+                            class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
+                            Hapus
                             </button>
                         </td>
                     </tr>

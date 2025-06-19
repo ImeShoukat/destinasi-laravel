@@ -17,11 +17,6 @@ class UlasanEdit extends Component
     {
         $ulasan = Ulasan::findOrFail($ulasanId);
 
-        // Optional: Lindungi agar hanya user pemilik bisa edit
-        if ($ulasan->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
-
         $this->ulasanId = $ulasan->id;
         $this->wisataId = $ulasan->wisata_id;
         $this->rating = $ulasan->rating;
@@ -42,11 +37,6 @@ class UlasanEdit extends Component
 
         $ulasan = Ulasan::findOrFail($this->ulasanId);
 
-        // Optional: Cek kepemilikan
-        if ($ulasan->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
-
         $ulasan->update([
             'rating' => $this->rating,
             'komentar' => $this->komentar,
@@ -60,15 +50,11 @@ class UlasanEdit extends Component
     {
         $ulasan = Ulasan::findOrFail($this->ulasanId);
 
-        // Optional: Cek kepemilikan
-        if ($ulasan->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
-        }
-
         $ulasan->delete();
 
         session()->flash('message', 'Ulasan berhasil dihapus.');
-        return redirect()->route('ulasan.index', ['wisataId' => $this->wisataId]);
+        $this->redirect(route('ulasan.index'), ['wisataId' => $this->wisataId], navigate: true);
+       
     }
 
     public function resetFields()

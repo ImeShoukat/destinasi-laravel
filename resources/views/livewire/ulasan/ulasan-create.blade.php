@@ -3,7 +3,6 @@
 
     <form wire:submit.prevent="submit" class="space-y-4 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow">
 
-        {{-- Dropdown User --}}
         <div>
             <label class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">User</label>
             <select wire:model.defer="userId" class="w-full px-4 py-2 border rounded-lg dark:bg-zinc-900 dark:border-zinc-700 dark:text-white">
@@ -15,13 +14,12 @@
             @error('userId') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
 
-        {{-- Dropdown Wisata --}}
         <div>
             <label class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Wisata</label>
             <select wire:model.defer="wisataId" class="w-full px-4 py-2 border rounded-lg dark:bg-zinc-900 dark:border-zinc-700 dark:text-white">
                 <option value="">Pilih Wisata</option>
                 @foreach($wisatas as $wisata)
-                    <option value="{{ $wisata->id }}">{{ $wisata->nama }}</option>
+                    <option value="{{ $wisata->id }}">{{ $wisata->nama_wisata }}</option>
                 @endforeach
             </select>
             @error('wisataId') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
