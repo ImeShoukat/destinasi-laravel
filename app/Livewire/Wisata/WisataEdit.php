@@ -6,11 +6,17 @@ use Livewire\Component;
 use App\Models\Wisata;
 use App\Models\Kategori;
 use App\Models\Kota;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class WisataEdit extends Component
 {
-    public $wisataId, $nama_wisata, $kategori_id, $kota_id, $deskripsi, $gambar;
+    use WithFileUploads;
+
+    public $wisataId, $nama_wisata, $kategori_id, $kota_id, $deskripsi;
+    public $gambar, $oldGambar;
     public $kategoris, $kotas;
+
     public function mount($wisataId)
     {
         $this->wisataId = $wisataId;
@@ -22,8 +28,9 @@ class WisataEdit extends Component
         $this->kategori_id = $wisata->kategori_id;
         $this->kota_id = $wisata->kota_id;
         $this->deskripsi = $wisata->deskripsi;
-        $this->gambar = $wisata->gambar;
+        $this->oldGambar = $wisata->gambar; // simpan path lama untuk ditampilkan dan jika tidak diubah
     }
+
     public function update()
     {
         $this->validate([
@@ -35,24 +42,41 @@ class WisataEdit extends Component
         ]);
 
         $wisata = Wisata::findOrFail($this->wisataId);
+
+        if ($this->gambar) {
+            // hapus gambar lama (opsional)
+            if ($wisata->gambar && Storage::disk('public')->exists($wisata->gambar)) {
+                Storage::disk('public')->delete($wisata->gambar);
+            }
+            $gambarPath = $this->gambar->store('wisata', 'public');
+        } else {
+            $gambarPath = $wisata->gambar;
+        }
+
         $wisata->update([
             'nama_wisata' => $this->nama_wisata,
             'kategori_id' => $this->kategori_id,
             'kota_id' => $this->kota_id,
             'deskripsi' => $this->deskripsi,
-            'gambar' => $this->gambar ? $this->gambar->store('wisata', 'public') : $wisata->gambar,
+            'gambar' => $gambarPath,
         ]);
 
-        session()->flash('message', 'Wisata updated successfully.');
-        $this->redirect(route('wisata.index'), navigate: true);
+        session()->flash('message', 'Wisata berhasil diperbarui.');
+        return redirect()->route('wisata.index');
     }
+
     public function delete()
     {
         $wisata = Wisata::findOrFail($this->wisataId);
-        $wisata->delete();  
-        session()->flash('message', 'Wisata deleted successfully.');
-        $this->redirect(route('wisata.index'), navigate: true);
+        if ($wisata->gambar && Storage::disk('public')->exists($wisata->gambar)) {
+            Storage::disk('public')->delete($wisata->gambar);
+        }
+        $wisata->delete();
+
+        session()->flash('message', 'Wisata berhasil dihapus.');
+        return redirect()->route('wisata.index');
     }
+
     public function render()
     {
         return view('livewire.wisata.wisata-edit');

@@ -7,7 +7,19 @@
             <input type="text" wire:model.defer="nama_wisata" class="w-full px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white focus:outline-none focus:ring focus:border-blue-500">
             @error('nama_wisata') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
+        <div>
+            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Gambar Wisata</label>
+            <input type="file" wire:model="gambar" accept="image/*"
+                class="w-full px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white focus:outline-none">
+            @error('gambar') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
 
+            @if ($gambar)
+                <div class="mt-2">
+                    <p class="text-sm text-zinc-500 dark:text-zinc-300 mb-1">Preview:</p>
+                    <img src="{{ $gambar->temporaryUrl() }}" class="h-32 rounded shadow">
+                </div>
+            @endif
+        </div>
         <div>
             <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Kategori</label>
             <select wire:model.defer="kategori_id" class="w-full px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white focus:outline-none">
