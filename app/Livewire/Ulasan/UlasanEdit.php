@@ -53,7 +53,7 @@ class UlasanEdit extends Component
         $ulasan->delete();
 
         session()->flash('message', 'Ulasan berhasil dihapus.');
-        $this->redirect(route('ulasan.index'), ['wisataId' => $this->wisataId], navigate: true);
+        return redirect()->route('ulasan.index', ['wisataId' => $this->wisataId]);
        
     }
 

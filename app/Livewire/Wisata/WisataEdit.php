@@ -9,7 +9,7 @@ use App\Models\Kota;
 
 class WisataEdit extends Component
 {
-    public $wisataId, $nama_wisata, $kategori_id, $kota_id, $deskripsi;
+    public $wisataId, $nama_wisata, $kategori_id, $kota_id, $deskripsi, $gambar;
     public $kategoris, $kotas;
     public function mount($wisataId)
     {
@@ -22,6 +22,7 @@ class WisataEdit extends Component
         $this->kategori_id = $wisata->kategori_id;
         $this->kota_id = $wisata->kota_id;
         $this->deskripsi = $wisata->deskripsi;
+        $this->gambar = $wisata->gambar;
     }
     public function update()
     {
@@ -30,6 +31,7 @@ class WisataEdit extends Component
             'kategori_id' => 'required|exists:kategoris,id',
             'kota_id' => 'required|exists:kotas,id',
             'deskripsi' => 'required|string',
+            'gambar' => 'nullable|image|max:2048',
         ]);
 
         $wisata = Wisata::findOrFail($this->wisataId);
@@ -38,6 +40,7 @@ class WisataEdit extends Component
             'kategori_id' => $this->kategori_id,
             'kota_id' => $this->kota_id,
             'deskripsi' => $this->deskripsi,
+            'gambar' => $this->gambar ? $this->gambar->store('wisata', 'public') : $wisata->gambar,
         ]);
 
         session()->flash('message', 'Wisata updated successfully.');

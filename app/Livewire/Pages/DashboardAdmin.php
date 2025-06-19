@@ -13,7 +13,7 @@ class DashboardAdmin extends Component
 {
     public function render()
     {
-        return view('livewire.pages.dashboard-admin', [
+        return view('livewire.pages.admin', [
         'totalWisata' => Wisata::count(),
         'totalKategori' => Kategori::count(),
         'totalKota' => Kota::count(),

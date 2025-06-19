@@ -23,6 +23,7 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">No</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Nama Wisata</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Gambar</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Kategori</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Kota</th>
                     <th class="px-6 py-3 text-left text-sm font-medium text-zinc-600 dark:text-zinc-300">Harga Tiket</th>
@@ -35,6 +36,13 @@
                     <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700">
                         <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $index + 1 }}</td>
                         <td class="px-6 py-4 text-sm font-medium text-zinc-900 dark:text-white">{{ $wisata->nama_wisata }}</td>
+                        <td class="px-6 py-4">
+                            @if($wisata->gambar)
+                                <img src="{{ asset("storage/{$wisata->gambar}") }}" alt="Gambar Wisata" class="h-16 w-24 object-cover rounded-md shadow">
+                            @else
+                                <span class="text-zinc-400 text-sm italic">Tidak ada gambar</span>
+                            @endif
+                        </td>
                         <td class="px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">{{ $wisata->kategori->nama_kategori ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">{{ $wisata->kota->nama_kota ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">Rp {{ number_format($wisata->biaya_masuk, 0, ',', '.') }}</td>
@@ -46,15 +54,16 @@
                                class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
                             </a>
-                            <button onclick="if(confirm('Apakah Anda yakin ingin menghapus wisata ini?')) { @this.delete({{ $wisata->id }}) }"
-                            class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
-                            Hapus
+                            <button wire:click="delete({{ $wisata->id }})" 
+                                    onclick="return confirm('Apakah Anda yakin ingin menghapus wisata ini?')"
+                                    class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
+                                Hapus
                             </button>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-4 text-center text-zinc-500 dark:text-zinc-400 text-sm">Belum ada data destinasi wisata.</td>
+                        <td colspan="8" class="px-6 py-4 text-center text-zinc-500 dark:text-zinc-400 text-sm">Belum ada data destinasi wisata.</td>
                     </tr>
                 @endforelse
             </tbody>

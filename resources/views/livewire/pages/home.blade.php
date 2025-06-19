@@ -1,18 +1,5 @@
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-    <!-- {{-- Header --}}
-    <div class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 py-6">
-            <h1 class="text-4xl font-bold text-gray-800 text-center mb-2">
-                🏝️ Wisata Indonesia Terpopuler
-            </h1>
-            <p class="text-gray-600 text-center">
-                Jelajahi destinasi wisata terbaik berdasarkan rating tertinggi
-            </p>
-        </div>
-    </div> -->
-
     <div class="max-w-7xl mx-auto px-4 py-8">
-        {{-- Filter Section --}}
         <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-semibold text-gray-800 flex items-center">
@@ -24,7 +11,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                {{-- Search Input --}}
+        
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <svg class="inline w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

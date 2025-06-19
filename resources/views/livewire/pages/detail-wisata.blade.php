@@ -203,7 +203,7 @@
                                 <div class="flex items-center space-x-3">
                                     <span class="text-sm text-gray-600 w-8">{{ $rating }}★</span>
                                     <div class="flex-1 bg-gray-200 rounded-full h-2">
-                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: {{ $stats['percentage'] }}%"></div>
+                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: '{{ $stats['percentage'] }}%'"></div>
                                     </div>
                                     <span class="text-sm text-gray-600 w-8">{{ $stats['count'] }}</span>
                                 </div>

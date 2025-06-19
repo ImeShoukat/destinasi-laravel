@@ -15,7 +15,8 @@ class Wisata extends Model
         'deskripsi',
         'biaya_masuk',
         'kategori_id',
-        'kota_id'];
+        'kota_id',
+        'gambar',];
 
     public function kategori()
     {
@@ -30,7 +31,9 @@ class Wisata extends Model
     public function ulasans()
     {
         return $this->hasMany(Ulasan::class);
+        
     }
+
     public function getRouteKeyName()
     {
         return 'nama_wisata';
@@ -62,4 +65,10 @@ class Wisata extends Model
     {
         return $query->orderBy('harga_tiket', 'asc');
     }
+    public function getThumbnailAttribute()
+{
+    return $this->gambar
+        ? asset('storage/' . $this->gambar)
+        : asset('images/default.jpg');
+}
 }

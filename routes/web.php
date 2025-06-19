@@ -1,4 +1,5 @@
 <?php
+
 use App\Livewire\Pages\DashboardAdmin;
 
 use App\Livewire\Settings\Appearance;
@@ -33,9 +34,8 @@ use App\Livewire\Ulasan\UlasanEdit;
 use App\Livewire\Pages\Home;
 use App\Livewire\Pages\DetailWisata;
 
-
 Route::get('/', Home::class)->name('home');
-Route::get('/wisata/{wisataId}', DetailWisata::class)->name('wisata.detail');
+Route::get('/wisata/{wisataId}/detail', DetailWisata::class)->name('wisata.detail');
 
 // Route::get('/', function () {
 //     if (Auth::check()) {
@@ -58,8 +58,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
+
 Route::get('/wisata', WisataIndex::class)->name('wisata.index');
 Route::get('/wisata/create', WisataCreate::class)->name('wisata.create');
+// Route::get('/wisata/create', fn() => 'hellow')->name('wisata.create');
 Route::get('/wisata/{wisataId}/edit', WisataEdit::class)->name('wisata.edit');
 
 Route::get('/kategori', KategoriIndex::class)->name('kategori.index');
@@ -80,4 +82,4 @@ Route::get('/ulasan/{ulasanId}/edit', UlasanEdit::class)->name('ulasan.edit');
 
 Route::get('/dashboard/admin', DashboardAdmin::class)->name('dashboard.admin');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -42,7 +42,7 @@
                             class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
                             </a>
-                            <button onclick="if(confirm('Apakah Anda yakin ingin menghapus Ulasan ini?')) { @this.delete({{ $ulasan->id }}) }"
+                            <button onclick="confirm('Apakah Anda yakin ingin menghapus Ulasan ini?')"
                             class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
                             Hapus
                             </button>
