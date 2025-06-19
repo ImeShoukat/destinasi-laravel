@@ -11,12 +11,14 @@ class KategoriIndex extends Component
 {
     use WithPagination;
     
-    public function delete(Kategori $kategori)
-    {
-        $kategori->delete();
-        session()->flash('message', 'Kategori berhasil dihapus.');
-        return redirect()->route('kategori.index');
-    }
+    public function delete($id)
+{
+    $kategori = Kategori::findOrFail($id);
+    $kategori->delete();
+
+    session()->flash('message', 'Kategori berhasil dihapus.');
+    $this->redirect(route('kategori.index'), navigate: true);
+}
     public function confirmDelete(Kategori $kategori)
     {
         $this->dispatchBrowserEvent('confirm-delete', [

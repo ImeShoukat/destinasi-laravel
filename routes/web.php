@@ -60,7 +60,10 @@ Route::get('/user', UserIndex::class)->name('user.index');
 Route::get('/user/create', UserCreate::class)->name('user.create');
 Route::get('/user/{userId}/edit', UserEdit::class)->name('user.edit');
 
-Route::get('/ulasan', UlasanIndex::class)->name('ulasan.index');
-Route::get('/ulasan/create', UlasanCreate::class)->name('ulasan.create');
+Route::get('/ulasan/{wisataId}', UlasanIndex::class)->name('ulasan.index');
+
+Route::get('/ulasan/{wisataId}/create', UlasanCreate::class)->name('ulasan.create');
+
 Route::get('/ulasan/{ulasanId}/edit', UlasanEdit::class)->name('ulasan.edit');
+
 require __DIR__.'/auth.php';

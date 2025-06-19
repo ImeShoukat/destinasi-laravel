@@ -10,9 +10,17 @@ class UlasanIndex extends Component
     public $wisataId;
     public $ulasans;
 
+    public function mount($wisataId)
+    {
+        $this->wisataId = $wisataId;
+        $this->fetchUlasans();
+    }
+
     public function fetchUlasans()
     {
-        $this->ulasans = Ulasan::where('wisata_id', $this->wisataId)->get();
+        $this->ulasans = Ulasan::with(['user', 'wisata'])
+            ->where('wisata_id', $this->wisataId)
+            ->get();
     }
 
     public function delete($ulasanId)
@@ -21,12 +29,7 @@ class UlasanIndex extends Component
         $ulasan->delete();
 
         session()->flash('message', 'Ulasan berhasil dihapus.');
-        $this->fetchUlasans(); // refresh data tanpa redirect
-    }
-
-    public function confirmDelete($ulasanId)
-    {
-        $this->dispatchBrowserEvent('confirm-delete', ['ulasanId' => $ulasanId]);
+        $this->fetchUlasans();
     }
 
     public function edit($ulasanId)
@@ -41,14 +44,6 @@ class UlasanIndex extends Component
 
     public function render()
     {
-        $ulasans = [];
-        if ($this->wisataId) {
-            $ulasans = Ulasan::with(['user', 'wisata'])
-            ->where('wisata_id', $this->wisataId)
-            ->get();
-        }
-        return view('livewire.ulasan.ulasan-index', [
-        'ulasans' => $ulasans,
-        ]);
+        return view('livewire.ulasan.ulasan-index');
     }
 }
