@@ -62,7 +62,7 @@ class WisataEdit extends Component
         ]);
 
         session()->flash('message', 'Wisata berhasil diperbarui.');
-        return redirect()->route('wisata.index');
+        $this->redirect(route('wisata.index'), navigate: true);
     }
 
     public function delete()
@@ -74,7 +74,7 @@ class WisataEdit extends Component
         $wisata->delete();
 
         session()->flash('message', 'Wisata berhasil dihapus.');
-        return redirect()->route('wisata.index');
+        $this->redirect(route('wisata.index'), navigate: true);
     }
 
     public function render()

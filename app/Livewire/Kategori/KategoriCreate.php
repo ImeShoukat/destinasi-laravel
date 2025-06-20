@@ -10,7 +10,7 @@ class KategoriCreate extends Component
 {
     public $nama_kategori;
     public $successMessage;
-    public function store() // Ubah dari submit() ke store()
+    public function store() 
     {
         $this->validate([
             'nama_kategori' => 'required|string|max:255',

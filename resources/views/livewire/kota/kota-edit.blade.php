@@ -7,7 +7,7 @@
         </div>
     @endif
 
-    <form wire:submit.prevent="store" class="space-y-4 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow">
+    <form wire:submit.prevent="update" class="space-y-4 bg-white dark:bg-zinc-800 p-6 rounded-lg shadow">
         <div>
             <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Nama Kota</label>
             <input type="text" wire:model.defer="nama_kota" placeholder="Contoh: Yogyakarta"

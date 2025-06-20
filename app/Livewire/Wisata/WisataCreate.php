@@ -45,7 +45,7 @@ class WisataCreate extends Component
         ]);
 
         session()->flash('message', 'Wisata berhasil ditambahkan.');
-        return $this->redirect(route('wisata.index'), navigate: true);
+        $this->redirect(route('wisata.index'), navigate: true);
     }
     
     public function render()

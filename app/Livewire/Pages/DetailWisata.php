@@ -31,7 +31,7 @@ class DetailWisata extends Component
             'wisata_id' => $this->wisataId,
             'ulasan' => $this->ulasan,
             'rating' => $this->rating,
-            // 'user_id' => auth()->id(), // kalau pakai user login
+            'user_id' => auth()->id(), // kalau pakai user login
         ]);
 
         session()->flash('success', 'Ulasan berhasil ditambahkan.');
