@@ -5,6 +5,7 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-zinc-800">
 
+    {{-- SIDEBAR --}}
     <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
@@ -12,69 +13,53 @@
             <x-app-logo />
         </a>
 
-        <flux:navlist variant="outline">
-    <flux:navlist.group :heading="__('Menu')" class="grid">
-
-        <flux:navlist.item icon="home" :href="route('dashboard.admin')" :current="request()->routeIs('dashboard.admin')" wire:navigate>
-            {{ __('Dashboard') }}
-        </flux:navlist.item>
-
-        <flux:navlist.item icon="map" :href="route('wisata.index')" :current="request()->routeIs('wisata.*')" wire:navigate>
-            {{ __('Wisata') }}
-        </flux:navlist.item>
-
-        <flux:navlist.item icon="tag" :href="route('kategori.index')" :current="request()->routeIs('kategori.*')" wire:navigate>
-            {{ __('Kategori') }}
-        </flux:navlist.item>
-
-        <flux:navlist.item icon="users" :href="route('kota.index')" :current="request()->routeIs('kota.*')" wire:navigate>
-            {{ __('Kota') }}
-        </flux:navlist.item>
-
-        <flux:navlist.item icon="users" :href="route('user.index')" :current="request()->routeIs('user.*')" wire:navigate>
-            {{ __('User') }}
-        </flux:navlist.item>
-
-        <flux:navlist.item icon="star" :href="route('ulasan.index', ['wisataId' => 1])" :current="request()->routeIs('ulasan.*')" wire:navigate>
-            {{ __('Ulasan') }}
-        </flux:navlist.item>
-
-    </flux:navlist.group>
-</flux:navlist>
+        <flux:navlist.group :heading="__('Menu')" class="grid">
+            @auth
+                @if (auth()->user()->role === 'admin')
+                    <flux:navlist.item icon="home" :href="route('dashboard.admin')" :current="request()->routeIs('dashboard.admin')" wire:navigate>
+                        {{ __('Dashboard') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="map" :href="route('wisata.index')" :current="request()->routeIs('wisata.*')" wire:navigate>
+                        {{ __('Wisata') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="tag" :href="route('kategori.index')" :current="request()->routeIs('kategori.*')" wire:navigate>
+                        {{ __('Kategori') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('kota.index')" :current="request()->routeIs('kota.*')" wire:navigate>
+                        {{ __('Kota') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('user.index')" :current="request()->routeIs('user.*')" wire:navigate>
+                        {{ __('User') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="star" :href="route('ulasan.index', ['wisataId' => 1])" :current="request()->routeIs('ulasan.*')" wire:navigate>
+                        {{ __('Ulasan') }}
+                    </flux:navlist.item>
+                @endif
+            @endauth
+        </flux:navlist.group>
 
         <flux:spacer />
 
-        <!-- <flux:navlist variant="outline">
-            <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-            </flux:navlist.item>
-
-            <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-            </flux:navlist.item>
-        </flux:navlist> -->
-
-        <!-- {{-- Desktop User Menu --}} -->
         @auth
+        {{-- DESKTOP USER DROPDOWN --}}
         <flux:dropdown class="hidden lg:block" position="bottom" align="start">
             <flux:profile
                 :name="auth()->user()->name"
                 :initials="auth()->user()->initials()"
                 icon:trailing="chevrons-up-down"
             />
-
             <flux:menu class="w-[220px]">
                 <flux:menu.radio.group>
                     <div class="p-0 text-sm font-normal">
-                        <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                        <div class="flex items-center gap-2 px-1 py-1.5">
+                            <span class="relative flex h-8 w-8 overflow-hidden rounded-lg">
                                 <span class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                     {{ auth()->user()->initials() }}
                                 </span>
                             </span>
-                            <div class="grid flex-1 text-start text-sm leading-tight">
-                                <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                            <div class="flex-1">
+                                <span class="block font-semibold truncate">{{ auth()->user()->name }}</span>
+                                <span class="text-xs truncate">{{ auth()->user()->email }}</span>
                             </div>
                         </div>
                     </div>
@@ -99,30 +84,30 @@
         @endauth
     </flux:sidebar>
 
-    {{-- Mobile User Menu --}}
-    <flux:header class="lg:hidden">
+    {{-- HEADER (MOBILE & ATAS) --}}
+    <flux:header class="lg:flex lg:justify-end lg:items-center lg:px-6 lg:py-3">
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
         <flux:spacer />
 
         @auth
+        {{-- MOBILE USER DROPDOWN --}}
         <flux:dropdown position="top" align="end">
             <flux:profile
                 :initials="auth()->user()->initials()"
                 icon-trailing="chevron-down"
             />
-
             <flux:menu>
                 <flux:menu.radio.group>
                     <div class="p-0 text-sm font-normal">
-                        <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                            <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
+                        <div class="flex items-center gap-2 px-1 py-1.5">
+                            <span class="relative flex h-8 w-8 overflow-hidden rounded-lg">
                                 <span class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                     {{ auth()->user()->initials() }}
                                 </span>
                             </span>
-                            <div class="grid flex-1 text-start text-sm leading-tight">
-                                <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                            <div class="flex-1">
+                                <span class="block font-semibold truncate">{{ auth()->user()->name }}</span>
+                                <span class="text-xs truncate">{{ auth()->user()->email }}</span>
                             </div>
                         </div>
                     </div>
@@ -145,6 +130,18 @@
             </flux:menu>
         </flux:dropdown>
         @endauth
+
+        @guest
+        {{-- LOGIN / REGISTER BUTTON --}}
+        <div class="flex items-center gap-3">
+            <a href="{{ route('login') }}" class="text-sm font-medium text-zinc-800 dark:text-white hover:underline">
+                Login
+            </a>
+            <a href="{{ route('register') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                Register
+            </a>
+        </div>
+        @endguest
     </flux:header>
 
     {{ $slot }}
