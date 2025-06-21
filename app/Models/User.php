@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'avatar',
+        'bio',
     ];
 
     /**
@@ -46,6 +50,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function isAdmin()
+{
+    return $this->role === 'admin';
+}
+
+    public function getAvatarUrlAttribute(): string
+{
+    return $this->photo
+        ? asset('storage/' . $this->photo)
+        : 'https://ui-avatars.com/api/?name=' . urlencode($this->name);
+}
 
     /**
      * Get the user's initials

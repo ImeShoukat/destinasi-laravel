@@ -56,6 +56,11 @@ class Wisata extends Model
             });
         }
     }
+    public function getRataRatingAttribute()
+{
+    return round($this->ulasans()->avg('rating'), 1) ?? 0;
+}
+
     public function scopeSortByRating($query)
     {
         return $query->withCount('ulasans')

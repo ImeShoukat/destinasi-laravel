@@ -11,7 +11,7 @@ class UlasanEdit extends Component
     public $ulasanId;
     public $wisataId;
     public $rating;
-    public $komentar;
+    public $ulasan;
 
     public function mount($ulasanId)
     {
@@ -20,14 +20,14 @@ class UlasanEdit extends Component
         $this->ulasanId = $ulasan->id;
         $this->wisataId = $ulasan->wisata_id;
         $this->rating = $ulasan->rating;
-        $this->komentar = $ulasan->komentar;
+        $this->ulasan = $ulasan->ulasan;
     }
 
     protected function rules()
     {
         return [
             'rating' => 'required|integer|min:1|max:5',
-            'komentar' => 'required|string|max:255',
+            'ulasan' => 'required|string|max:255',
         ];
     }
 
@@ -39,7 +39,7 @@ class UlasanEdit extends Component
 
         $ulasan->update([
             'rating' => $this->rating,
-            'komentar' => $this->komentar,
+            'ulasan' => $this->ulasan,
         ]);
 
         session()->flash('message', 'Ulasan berhasil diperbarui.');

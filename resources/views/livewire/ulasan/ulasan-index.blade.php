@@ -1,14 +1,14 @@
 <div class="max-w-6xl mx-auto px-4 py-6">
     <div class="mb-6 flex justify-between items-center">
         <h1 class="text-3xl font-semibold text-zinc-800 dark:text-zinc-100">Manajemen Ulasan</h1>
-        <a href="{{ route('ulasan.create') }}" wire:navigate
+        <!-- <a href="{{ route('ulasan.create') }}" wire:navigate
            class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg shadow transition duration-200">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
             </svg>
             Tambah Ulasan
-        </a>
+        </a> -->
     </div>
 
     @if(session()->has('message'))
@@ -36,15 +36,16 @@
                         <td class="px-6 py-4 text-sm font-medium text-zinc-900 dark:text-white">{{ $ulasan->user->name}}</td>
                         <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->wisata->nama_wisata ?? '-' }}</td>
                         <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->ulasan }}</td>
-                        <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->rating }}/10</td>
+                        <td class="px-6 py-4 text-sm text-zinc-800 dark:text-zinc-200">{{ $ulasan->rating }}/5</td>
                         <td class="px-6 py-4 text-center space-x-2">
-                            <a href="{{ route('ulasan.edit', $ulasan->id) }}" wire:navigate
+                            <!-- <a href="{{ route('ulasan.edit', $ulasan->id) }}" wire:navigate
                             class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
-                            </a>
-                            <button onclick="confirm('Apakah Anda yakin ingin menghapus Ulasan ini?')"
-                            class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
-                            Hapus
+                            </a> -->
+                            <button 
+                                onclick="if(confirm('Apakah Anda yakin ingin menghapus ulasan ini?')) { @this.call('delete', {{ $ulasan->id }}) }"
+                                class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
+                                Hapus
                             </button>
                         </td>
                     </tr>

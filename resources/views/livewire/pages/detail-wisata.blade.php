@@ -148,10 +148,10 @@
                                     <div class="flex items-center justify-between mb-2">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                                                {{ strtoupper(substr($ulasan->nama_pengulas, 0, 1)) }}
+                                                {{ strtoupper(substr($ulasan->userId, 0, 1)) }}
                                             </div>
                                             <div>
-                                                <p class="font-semibold text-gray-900">{{ $ulasan->nama_pengulas }}</p>
+                                                <p class="font-semibold text-gray-900">{{ $ulasan->user->name }}</p>
                                                 <p class="text-sm text-gray-500">{{ $ulasan->created_at->diffForHumans() }}</p>
                                             </div>
                                         </div>
@@ -164,7 +164,7 @@
                                             @endfor
                                         </div>
                                     </div>
-                                    <p class="text-gray-700">{{ $ulasan->komentar }}</p>
+                                    <p class="text-gray-700">{{ $ulasan->ulasan }}</p>
                                 </div>
                             @endforeach
                         </div>
@@ -203,7 +203,7 @@
                                 <div class="flex items-center space-x-3">
                                     <span class="text-sm text-gray-600 w-8">{{ $rating }}★</span>
                                     <div class="flex-1 bg-gray-200 rounded-full h-2">
-                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: '{{ $stats['percentage'] }}%'"></div>
+                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: {{ $stats['percentage'] }}%"></div>
                                     </div>
                                     <span class="text-sm text-gray-600 w-8">{{ $stats['count'] }}</span>
                                 </div>
@@ -213,70 +213,89 @@
                 @endif
 
                 {{-- Add Review Form --}}
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Tulis Ulasan</h3>
-                    
-                    @if (session()->has('success'))
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+@auth
+<div class="bg-white rounded-xl shadow-lg p-6">
+    <h3 class="text-xl font-bold text-gray-900 mb-4">Tulis Ulasan</h3>
 
-                    <form wire:submit="submitUlasan">
-                        {{-- Name --}}
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Nama</label>
-                            <input 
-                                type="text" 
-                                wire:model="nama_pengulas"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="Masukkan nama Anda"
-                            >
-                            @error('nama_pengulas') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
+    @if (session()->has('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
 
-                        {{-- Rating --}}
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
-                            <div class="flex space-x-1">
-                                @for($i = 1; $i <= 5; $i++)
-                                    <button 
-                                        type="button"
-                                        wire:click="$set('rating', {{ $i }})"
-                                        class="focus:outline-none"
-                                    >
-                                        <svg class="w-6 h-6 {{ $i <= $rating ? 'text-yellow-400 fill-current' : 'text-gray-300 hover:text-yellow-400' }} transition-colors" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                        </svg>
-                                    </button>
-                                @endfor
-                            </div>
-                            @error('rating') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
+    <form wire:submit="simpanUlasan" class="space-y-4">
+        {{-- Hidden Fields --}}
+        <input type="hidden" wire:model="wisataId" value="{{ $wisata->id }}">
 
-                        {{-- Comment --}}
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Ulasan</label>
-                            <textarea 
-                                wire:model="ulasan"
-                                rows="4"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="Ceritakan pengalaman Anda..."
-                            ></textarea>
-                            <p class="text-xs text-gray-500 mt-1">{{ strlen($ulasan) }}/500 karakter</p>
-                            @error('ulasan') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
+        {{-- User ID --}}
+        <input type="hidden" wire:model="userId" value="{{ auth()->user()->id }}">
+        <input type="hidden" wire:model="rating" value="{{ $rating }}">
+        <input type="hidden" wire:model="ulasan" value="{{ $ulasan }}">
+        <input type="hidden" wire:model="status" value="published">
+        <input type="hidden" wire:model="created_at" value="{{ now() }}">
+        <input type="hidden" wire:model="updated_at" value="{{ now() }}">
+        <input type="hidden" wire:model="deleted_at" value="">
+        {{-- Nama --}}
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
+            <div class="px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-600">
+                {{ auth()->user()->name }}
+            </div>
+        </div>
 
-                        <button 
-                            type="submit"
-                            class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 font-medium"
-                            wire:loading.attr="disabled"
-                        >
-                            <span wire:loading.remove>Kirim Ulasan</span>
-                            <span wire:loading>Mengirim...</span>
-                        </button>
-                    </form>
-                </div>
+        {{-- Rating --}}
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+            <div class="flex space-x-1">
+    @for($i = 1; $i <= 5; $i++)
+        <button 
+            type="button"
+            wire:click="$set('rating', {{ $i }})"
+            class="focus:outline-none"
+        >
+            <svg 
+                class="w-6 h-6 transition-colors 
+                    {{ $i <= $rating ? 'text-yellow-400 fill-current' : 'text-gray-300' }}" 
+                viewBox="0 0 20 20"
+            >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+        </button>
+    @endfor
+</div>
+
+            @error('rating') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
+
+        {{-- Ulasan --}}
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Ulasan</label>
+            <textarea 
+                wire:model="ulasan"
+                rows="4"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Ceritakan pengalaman Anda..."
+            ></textarea>
+            @error('ulasan') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+        </div>
+
+        <button 
+            type="submit" wire:target="create"
+            class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 font-medium"
+            wire:loading.attr="disabled"
+        >
+            <span wire:loading.remove>Kirim Ulasan</span>
+            <span wire:loading>Mengirim...</span>
+        </button>
+    </form>
+</div>
+@else
+{{-- Kalau belum login --}}
+<div class="bg-white rounded-xl shadow-lg p-6 text-center">
+    <p class="text-gray-600 mb-4">Silakan <a href="{{ route('login') }}" class="text-blue-600 underline">login</a> untuk menulis ulasan.</p>
+</div>
+@endauth
+
             </div>
         </div>
     </div>

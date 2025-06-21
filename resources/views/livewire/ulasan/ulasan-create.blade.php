@@ -26,10 +26,10 @@
         </div>
 
         <div>
-            <label class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Rating (1–10)</label>
+            <label class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Rating (1–5)</label>
             <select wire:model.defer="rating" class="w-full px-4 py-2 border rounded-lg dark:bg-zinc-900 dark:border-zinc-700 dark:text-white">
                 <option value="">Pilih Rating</option>
-                @for ($i = 1; $i <= 10; $i++)
+                @for ($i = 1; $i <= 5; $i++)
                     <option value="{{ $i }}">{{ $i }}</option>
                 @endfor
             </select>

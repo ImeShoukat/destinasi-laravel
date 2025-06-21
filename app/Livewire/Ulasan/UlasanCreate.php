@@ -18,7 +18,7 @@ class UlasanCreate extends Component
         return [
             'userId' => 'required|exists:users,id',
             'wisataId' => 'required|exists:wisatas,id',
-            'rating' => 'required|integer|min:1|max:10',
+            'rating' => 'required|integer|min:1|max:5',
             'ulasan' => 'required|string|max:255',
         ];
     }

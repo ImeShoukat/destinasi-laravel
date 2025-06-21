@@ -9,7 +9,7 @@
         </div>
 
         <div>
-            <label class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Rating (1 - 10)</label>
+            <label class="block mb-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">Rating (1 - 5)</label>
             <input type="number" wire:model.defer="rating" min="1" max="10" class="w-full px-4 py-2 border rounded-lg dark:bg-zinc-900 dark:border-zinc-700 dark:text-white">
             @error('rating') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
@@ -19,7 +19,7 @@
                class="text-sm text-zinc-600 hover:text-zinc-800 dark:text-zinc-300 dark:hover:text-white transition">
                 ← Kembali
             </a>
-            <button type="submit" wire:target="submit"
+            <button type="submit" wire:target="update"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">
                 Simpan
             </button>
