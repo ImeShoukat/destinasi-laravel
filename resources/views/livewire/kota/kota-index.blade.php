@@ -36,10 +36,11 @@
                                class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded shadow transition">
                                 Edit
                             </a>
-                            <button wire:click="delete({{ $kota->id }})" onclick="return confirm('Apakah Anda yakin ingin menghapus kota ini?')"
-                            class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
-                            Hapus
-                        </button>
+                        <button 
+                                onclick="if(confirm('Apakah Anda yakin ingin menghapus ulasan ini?')) { @this.call('delete', {{ $kota->id }}) }"
+                                class="inline-block bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded shadow transition">
+                                Hapus
+                            </button>
                         </td>
                     </tr>
                 @empty
