@@ -120,24 +120,7 @@
                             Ulasan ({{ $wisata->ulasans->count() }})
                         </h2>
                         
-                        {{-- Filter & Sort --}}
-                        <div class="flex space-x-3">
-                            <select wire:model.live="filterRating" class="text-sm border border-gray-300 rounded-lg px-3 py-2">
-                                <option value="">Semua Rating</option>
-                                <option value="5">5 Bintang</option>
-                                <option value="4">4 Bintang</option>
-                                <option value="3">3 Bintang</option>
-                                <option value="2">2 Bintang</option>
-                                <option value="1">1 Bintang</option>
-                            </select>
-                            
-                            <select wire:model.live="sortBy" class="text-sm border border-gray-300 rounded-lg px-3 py-2">
-                                <option value="terbaru">Terbaru</option>
-                                <option value="terlama">Terlama</option>
-                                <option value="rating_tinggi">Rating Tertinggi</option>
-                                <option value="rating_rendah">Rating Terendah</option>
-                            </select>
-                        </div>
+                        
                     </div>
 
                     {{-- Reviews List --}}

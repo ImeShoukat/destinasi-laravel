@@ -19,7 +19,7 @@
 
             <button type="submit" wire:loading.attr="disabled"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">
-                <span wire:loading.remove>Simpan</span>
+                <span wire:loading.remove wire:target="store">Simpan</span>
                 <span wire:loading>Sedang menyimpan...</span>
             </button>
         </div>

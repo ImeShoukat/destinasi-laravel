@@ -134,10 +134,10 @@
         @guest
         {{-- LOGIN / REGISTER BUTTON --}}
         <div class="flex items-center gap-3">
-            <a href="{{ route('login') }}" class="text-sm font-medium text-zinc-800 dark:text-white hover:underline">
+            <a href="{{ route('login') }}" class="text-sm font-medium text-zinc-800 dark:text-white hover:underline" wire:navigate>
                 Login
             </a>
-            <a href="{{ route('register') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
+            <a href="{{ route('register') }}" class="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline" wire:navigate>
                 Register
             </a>
         </div>

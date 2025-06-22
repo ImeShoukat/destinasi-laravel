@@ -21,7 +21,7 @@ class KategoriCreate extends Component
         ]);
 
         session()->flash('message', 'Kategori berhasil ditambahkan.');
-        return redirect()->route('kategori.index');
+        $this->redirect(route('kategori.index'), navigate: true);
     }
     public function resetForm()
     {
